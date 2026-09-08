@@ -1,12 +1,12 @@
-<div class="filament-hidden">
+![Laravel TikTok Ads](art/jeffersongoncalves-laravel-tiktok-ads.png)
 
-<!-- banner: art/jeffersongoncalves-laravel-tiktok-ads.png (generate via portfolio-banner skill) -->
+# Laravel TikTok Ads
 
-</div>
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/jeffersongoncalves/laravel-tiktok-ads.svg?style=flat-square)](https://packagist.org/packages/jeffersongoncalves/laravel-tiktok-ads)
+[![Total Downloads](https://img.shields.io/packagist/dt/jeffersongoncalves/laravel-tiktok-ads.svg?style=flat-square)](https://packagist.org/packages/jeffersongoncalves/laravel-tiktok-ads)
+[![License](https://img.shields.io/packagist/l/jeffersongoncalves/laravel-tiktok-ads.svg?style=flat-square)](LICENSE.md)
 
-# TiktokAds
-
-Laravel integration for the TikTok Ads (TikTok Business) API
+Laravel integration for the TikTok Ads (TikTok Business) API — advertiser info, campaigns, ad groups, integrated reports and custom audiences.
 
 ## Installation
 
@@ -16,10 +16,65 @@ You can install the package via composer:
 composer require jeffersongoncalves/laravel-tiktok-ads
 ```
 
+Publish the config file:
+
+```bash
+php artisan vendor:publish --tag="laravel-tiktok-ads-config"
+```
+
+Set your credentials in `.env`:
+
+```env
+TIKTOK_ACCESS_TOKEN=
+TIKTOK_ADVERTISER_ID=
+TIKTOK_ADS_API_VERSION=v1.3
+```
+
+Get an access token from the [TikTok for Business developer portal](https://business-api.tiktok.com/portal).
+
 ## Usage
 
 ```php
-// TODO
+use JeffersonGoncalves\TiktokAds\Facades\TiktokAds;
+
+TiktokAds::advertiserInfo(); // uses TIKTOK_ADVERTISER_ID by default
+TiktokAds::advertiserInfo('7000000000000000000'); // or pass an advertiser id explicitly
+
+TiktokAds::campaigns();
+TiktokAds::campaigns(page: 2, pageSize: 50);
+
+TiktokAds::createCampaign(name: 'My Campaign', objective: 'TRAFFIC', budgetMode: 'BUDGET_MODE_DAY', budget: 50.0);
+
+TiktokAds::updateCampaignStatus(campaignIds: ['1790000000000000000'], status: 'DISABLE');
+
+TiktokAds::adGroups();
+TiktokAds::adGroups(campaignId: '1790000000000000000');
+
+TiktokAds::report(
+    startDate: '2026-01-01',
+    endDate: '2026-01-31',
+    dimensions: ['campaign_id'],
+    metrics: ['spend', 'impressions', 'clicks', 'conversion'],
+    dataLevel: 'AUCTION_CAMPAIGN',
+);
+
+TiktokAds::audiences();
+```
+
+Every method returns an `Illuminate\Http\Client\Response`, so you can chain `->json()`, `->throw()`, etc. Note that the TikTok Business API answers with HTTP 200 even on failure — check the `code` field in the payload:
+
+```php
+$response = TiktokAds::campaigns();
+
+if ($response->json('code') !== 0) {
+    report(new RuntimeException($response->json('message')));
+}
+```
+
+You can also resolve the client from the container instead of using the facade:
+
+```php
+app(JeffersonGoncalves\TiktokAds\TiktokAds::class)->campaigns();
 ```
 
 ## Testing

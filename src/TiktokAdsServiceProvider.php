@@ -1,6 +1,6 @@
 <?php
 
-namespace Jeffersongoncalves\TiktokAds;
+namespace JeffersonGoncalves\TiktokAds;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -11,8 +11,17 @@ class TiktokAdsServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('laravel-tiktok-ads')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigrations();
+            ->hasConfigFile('laravel-tiktok-ads');
+    }
+
+    public function packageRegistered(): void
+    {
+        $this->app->singleton(TiktokAds::class, fn () => new TiktokAds(
+            config('laravel-tiktok-ads.access_token'),
+            config('laravel-tiktok-ads.advertiser_id'),
+            config('laravel-tiktok-ads.api_version'),
+        ));
+
+        $this->app->alias(TiktokAds::class, 'laravel-tiktok-ads');
     }
 }

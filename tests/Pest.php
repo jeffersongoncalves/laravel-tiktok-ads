@@ -1,3 +1,5 @@
 <?php
 
-uses(Jeffersongoncalves\TiktokAds\Tests\TestCase::class)->in('Feature', 'Unit');
+use JeffersonGoncalves\TiktokAds\Tests\TestCase;
+
+uses(TestCase::class)->in('Feature', 'Unit');

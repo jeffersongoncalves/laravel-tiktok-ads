@@ -1,8 +1,8 @@
 <?php
 
-namespace Jeffersongoncalves\TiktokAds\Tests;
+namespace JeffersonGoncalves\TiktokAds\Tests;
 
-use Jeffersongoncalves\TiktokAds\TiktokAdsServiceProvider;
+use JeffersonGoncalves\TiktokAds\TiktokAdsServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra

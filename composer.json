@@ -3,7 +3,10 @@
     "description": "Laravel integration for the TikTok Ads (TikTok Business) API",
     "keywords": [
         "laravel",
-        "laravel-tiktok-ads"
+        "tiktok-ads",
+        "tiktok",
+        "business-api",
+        "advertising"
     ],
     "homepage": "https://github.com/jeffersongoncalves/laravel-tiktok-ads",
     "license": "MIT",
@@ -27,12 +30,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Jeffersongoncalves\\TiktokAds\\": "src/"
+            "JeffersonGoncalves\\TiktokAds\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Jeffersongoncalves\\TiktokAds\\Tests\\": "tests/"
+            "JeffersonGoncalves\\TiktokAds\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -52,10 +55,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Jeffersongoncalves\\TiktokAds\\TiktokAdsServiceProvider"
+                "JeffersonGoncalves\\TiktokAds\\TiktokAdsServiceProvider"
             ],
             "aliases": {
-                "TiktokAds": "Jeffersongoncalves\\TiktokAds\\Facades\\TiktokAds"
+                "TiktokAds": "JeffersonGoncalves\\TiktokAds\\Facades\\TiktokAds"
             }
         }
     },
